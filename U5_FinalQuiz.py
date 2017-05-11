@@ -77,7 +77,6 @@ def when_offered(courses,course):
 
 def involved(course, person):
     involved = {}
-    entry = ''
     for element in courses:
         for c in courses[element]:
             for detail in courses[element][c]:
@@ -87,8 +86,6 @@ def involved(course, person):
                         involved[element] = involved[element] + [c]
                     else:
                         involved[element] = [c]
-                        #print 'INITIATE', detail, course[element][c][detail]
-                #print involved
     return involved   
 
 #print when_offered (courses, 'cs101')
