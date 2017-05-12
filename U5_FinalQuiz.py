@@ -58,7 +58,7 @@ def courses_offered(courses, hexamester):
 # Define a procedure, when_offered(courses, course), that takes a courses data
 # structure and a string representing a class, and returns a list of strings
 # representing the hexamesters when the input course is offered.
-
+# Answer: TC
 def when_offered(courses,course):
     dates = []
     for element in courses:
@@ -74,7 +74,7 @@ def when_offered(courses,course):
 # list of courses that are offered that hexamester (the courses in the list 
 # can be in any order).
 
-
+# Answer: TC
 def involved(course, person):
     involved = {}
     for element in courses:
@@ -82,32 +82,33 @@ def involved(course, person):
             for detail in courses[element][c]:
                 if person == courses[element][c][detail]:
                     if element in involved:
-                        #print 'TRUE', detail, course[element][c][detail]
                         involved[element] = involved[element] + [c]
                     else:
                         involved[element] = [c]
     return involved   
 
-#print when_offered (courses, 'cs101')
+print when_offered (courses, 'cs101')
+# Expected Result
 #>>> ['apr2012', 'feb2012']
 
-#print when_offered(courses, 'bio893')
+print when_offered(courses, 'bio893')
+# Expected Result
 #>>> []
 
 print involved(courses, 'Dave')
 #>>> {'apr2012': ['cs101', 'cs387'], 'feb2012': ['cs101']}
 
-print 'Peter C.', involved(courses, 'Peter C.')
+print involved(courses, 'Peter C.')
 #>>> {'apr2012': ['cs262'], 'feb2012': ['cs101']}
 
-print 'Dorina', involved(courses, 'Dorina')
+print involved(courses, 'Dorina')
 #>>> {'jan2044': ['cs001']}
 
-print 'Peter', involved(courses,'Peter')
+print involved(courses,'Peter')
 #>>> {}
 
-print 'Robotic', involved(courses,'Robotic')
+print involved(courses,'Robotic')
 #>>> {}
 
-print 'null', involved(courses, '')
+print involved(courses, '')
 #>>> {}
