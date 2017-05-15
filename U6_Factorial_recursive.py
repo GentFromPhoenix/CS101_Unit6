@@ -97,26 +97,27 @@ def iter_fibonacci(n):
     current = 0
     after = 1
     for i in range(0, n):
+        print 'i=', i, 'fibo =', current
         current, after = after, current + after
     return current
 
         
-print iter_fibonacci(0)
+print iter_fibonacci(10)
 #>>> 0
-print iter_fibonacci(1)
+#print iter_fibonacci(1)
 #>>> 1
-print iter_fibonacci(15)
+#print iter_fibonacci(15)
 #>>> 610        
 print '-------  Mass of Bunnies to End the World ----'      
 mass_of_earth = 5.9722 * 10**24 # Kilogram estimate
 mass_of_rabbit = 2 # kilograms
 
 n=1
-while iter_fibonacci(n) * mass_of_rabbit < mass_of_earth:
-    n = n + 1
-print 'The number of months of the mass of rabbits to equal'
-print 'the mass of the earth'
-print n, 'months and it would be', iter_fibonacci(n), 'rabbits'     
+#while iter_fibonacci(n) * mass_of_rabbit < mass_of_earth:
+#    n = n + 1
+#print 'The number of months of the mass of rabbits to equal'
+#print 'the mass of the earth'
+#print n, 'months and it would be', iter_fibonacci(n), 'rabbits'     
    
    
 
