@@ -22,7 +22,7 @@ def crawl_web(seed):
             add_page_to_index(index, page, content) 
             union(tocrawl, get_all_links(content)) 
             crawled.append(page) 
-    return index 
+    return index
 
 def add_page_to_index(index, url, content): 
     words = content.split() 
