@@ -196,7 +196,41 @@ def lookup(index, ranks, keyword):
         return bestpage
     return None        
 
-            
+# This is "lookup" that is sorted
+def ordered_search(index, ranks, keyword): 
+    array = index[keyword]
+    array_pass = []
+    # Define List to sort [url1,rank],[url2,rank]...
+    for element in array:
+        array_pass.append([element,ranks[element]])
+    # Sort the above list in procedure sort
+    sorted_ranks =  sort(array_pass)
+    # create final list to pass back based on sorted list url elements
+    array_pass = []
+    for element in sorted_ranks:
+        array_pass.append(element[0])          
+    return array_pass          
+           
+           
+def sort(array):
+    less = []
+    equal = []
+    greater = []
+    
+    if len(array) > 1:
+        pivot = array[0][1]
+        for x in array:
+            if x[1] < pivot:
+                less.append(x)
+            if x[1] == pivot:
+                equal.append(x)
+            if x[1] > pivot:
+                greater.append(x)
+        # Don't forget to return something!
+        return sort(greater)+equal+sort(less)  # Just use the + operator to join lists
+    # Note that you want equal ^^^^^ not pivot
+    else:  # You need to hande the part at the end of the recursion - when you only have one element in your array, just return the array.
+        return array              
 
 def compute_ranks(graph):
     d = 0.8 # damping factor
@@ -217,8 +251,8 @@ def compute_ranks(graph):
         ranks = newranks
         #print 'loop', i
     return ranks
-        
     
+  
 
 
 index , graph = crawl_web('http://udacity.com/cs101x/urank/index.html') 
@@ -230,11 +264,15 @@ index , graph = crawl_web('http://udacity.com/cs101x/urank/index.html')
 #'http://udacity.com/cs101x/urank/kathleen.html',
 #'http://udacity.com/cs101x/urank/nickel.html',
 #'http://udacity.com/cs101x/urank/zinc.html']
+print '--------------------------------------------------------'
+print '------             RANKING PAGES -----------------------'
+print '--------------------------------------------------------'
 
 index, graph = crawl_web('http://udacity.com/cs101x/urank/index.html')
 ranks = compute_ranks(graph)
+print 'The ranks are'
 print ranks
-print index
+#print index
 
 #>>> {'http://udacity.com/cs101x/urank/kathleen.html': 0.11661866666666663,
 #'http://udacity.com/cs101x/urank/zinc.html': 0.038666666666666655,
@@ -242,6 +280,10 @@ print index
 #'http://udacity.com/cs101x/urank/arsenic.html': 0.054133333333333325,
 #'http://udacity.com/cs101x/urank/index.html': 0.033333333333333326,
 #'http://udacity.com/cs101x/urank/nickel.html': 0.09743999999999997}
+print '--------------------------------------------------------'
+print '------     Picking the best page -----------------------'
+print '--------------------------------------------------------'
+
 print '--------------------' 
 print lookup(index, ranks, 'The')
 print lookup(index, ranks, 'Hummus')
@@ -251,4 +293,24 @@ print lookup(index, ranks, 'the')
 #>>> http://udacity.com/cs101x/urank/nickel.html
 
 print lookup(index, ranks, 'babaganoush')
+#>>> None
+print '------------------------------------------'
+print '------ Ordering Search Results  ----------'
+print '------------------------------------------'
+print '---Keyword --- "Hummus"'
+print ordered_search(index, ranks, 'Hummus')
+#>>> ['http://udacity.com/cs101x/urank/kathleen.html',
+#    'http://udacity.com/cs101x/urank/nickel.html',
+#    'http://udacity.com/cs101x/urank/arsenic.html',
+#    'http://udacity.com/cs101x/urank/hummus.html',
+#    'http://udacity.com/cs101x/urank/index.html']
+print '---Keyword --- "the"'
+print ordered_search(index, ranks, 'the')
+#>>> ['http://udacity.com/cs101x/urank/nickel.html',
+#    'http://udacity.com/cs101x/urank/arsenic.html',
+#    'http://udacity.com/cs101x/urank/hummus.html',
+#    'http://udacity.com/cs101x/urank/index.html']
+
+
+#print ordered_search(index, ranks, 'babaganoush')
 #>>> None
