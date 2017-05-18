@@ -53,7 +53,7 @@
 # a task. You are encouraged to test your code by using print statements and the 
 # Test Run button. 
 # ----------------------------------------------------------------------------- 
-
+example_input2 = ""
 # Example string input. Use it to test your code.
 example_input="John is connected to Bryant, Debra, Walter.\
 John likes to play The Movie: The Game, The Legend of Corgi, Dinosaur Diner.\
@@ -76,7 +76,9 @@ Jennie likes to play Super Mushroom Man, Dinosaur Diner, Call of Arms.\
 Robin is connected to Ollie.\
 Robin likes to play Call of Arms, Dwarves and Swords.\
 Freda is connected to Olive, John, Debra.\
-Freda likes to play Starfleet Commander, Ninja Hamsters, Seahorse Adventures."
+Freda likes to play Starfleet Commander, Ninja Hamsters, Seahorse Adventures.\
+Franklin is connected to Robin, Jennie.\
+Kathy likes to play Oink, Yabbo, Tiddly Winks."
 
 # ----------------------------------------------------------------------------- 
 # create_data_structure(string_input): 
@@ -101,60 +103,28 @@ Freda likes to play Starfleet Commander, Ninja Hamsters, Seahorse Adventures."
 #   The newly created network data structure
 def create_data_structure(string_input):
     master_list = {}
-    string_len = len(string_input)
-    endpos = string_input.find('.')
-    position = 0
-#    luser = string_input.find('is connected to', position) - 1
-#    lgames = string_input.find('likes to play', position) - 1
-#    user = string_input[position:luser]
-#    master_list[user] = {}
-#    position = position + luser + 17
+    current = 0
     n = 0
     while True:
-        print '-----------------------------------------------------'
-        print '* The iteration is', n
-        print '* position going into is', position, "endpos is", endpos
+        if string_input.find('.',current) == -1:
+            return master_list
+        line = string_input[current:string_input.find('.', current)] # Get Next Line
+        #print line
+        name = line[0:line.find(' ',0)] # Get Name in Line
+        if name not in master_list:
+            master_list[name] = {}  # If name not in master yet
+        if line.find('connected') > 0:
+            master_list[name]['Connections'] = line[line.find('connected')+13:len(line)].split(', ')
+        if line.find('play') > 0:
+            master_list[name]['Games'] = line[line.find('play')+5:len(line)].split(', ')
+        # More work *******
+        # Will need to make sure this works for empty list or no entry of particular type say games played is blank
+        # Also make sure it can handle an empty string.    READ THE REQUIREMENTS AND MAKE SURE ALL BUILT IN AND CHECKED
+        current = string_input.find('.', current) + 1
+        #print 'current is:', current
+        #return master_list
+        
 
-        luser = string_input.find('is connected to', position) - 1
-        lgames = string_input.find('likes to play', position) - 1
-        user = string_input[position:luser]
-        print '* luser is', luser, '   lgames is', lgames
-        print '* user is: ', user
-        print '----------------------'
-        master_list[user] = {}
-        position = position + luser + 17       
-        while position < endpos:
-            if string_input.find(',', position + 1) > endpos:
-                master_list[user]['Connection'].append(string_input[position:string_input.find('.')])
-                position = endpos + 1
-            else:
-                if len(master_list[user]) == 0:
-                    master_list[user]['Connection'] = [string_input[position:string_input.find(',',position + 1)]]
-                else:
-                    master_list[user]['Connection'].append(string_input[position:string_input.find(',',position + 1)])
-                    position = string_input.find(',',position + 1) + 2
-        endpos = string_input.find('.',endpos + 2)
-        position = lgames + 15
-        print master_list
-        print 'position and endpos into second internal while', position, endpos
-        while position < endpos:
-            if string_input.find(',', position + 1) > endpos:
-                master_list[user]['Games'].append(string_input[position:string_input.find('.', position + 1)])
-                position = endpos + 1
-            else:
-                print 'master_list', user, 'length', len(master_list[user])
-                if len(master_list[user]) == 1:
-                    master_list[user]['Games'] = [string_input[position:string_input.find(',',position + 1)]]
-                else:
-                    master_list[user]['Games'].append(string_input[position:string_input.find(',',position + 1)])
-                    position = string_input.find(',',position + 1) + 2
-        endpos = string_input.find('.',endpos + 2)
-        print master_list 
-        if n > 2:
-            return master_list   
-        n = n + 1
-    #return network
-    return 'testing'
 
 # ----------------------------------------------------------------------------- # 
 # Note that the first argument to all procedures below is 'network' This is the #
@@ -176,7 +146,13 @@ def create_data_structure(string_input):
 #   - If the user has no connections, return an empty list.
 #   - If the user is not in network, return None.
 def get_connections(network, user):
-	return []
+    if user in network:
+        if 'Connections' in network[user]:
+	        return network[user]['Connections']
+        else:
+            return []
+    else:
+        return None
 
 # ----------------------------------------------------------------------------- 
 # get_games_liked(network, user): 
@@ -191,7 +167,13 @@ def get_connections(network, user):
 #   - If the user likes no games, return an empty list.
 #   - If the user is not in network, return None.
 def get_games_liked(network,user):
-    return []
+    if user in network:
+        if 'Games' in network[user]:
+	        return network[user]['Games']
+        else:
+            return []
+    else:
+        return None
 
 # ----------------------------------------------------------------------------- 
 # add_connection(network, user_A, user_B): 
@@ -208,7 +190,14 @@ def get_games_liked(network,user):
 #   - If a connection already exists from user_A to user_B, return network unchanged.
 #   - If user_A or user_B is not in network, return False.
 def add_connection(network, user_A, user_B):
-	return network
+    if user_A in network and user_B in network:
+        if user_B in network[user_A]['Connections']:
+            return network
+        network[user_A]['Connections'].append(user_B)
+        return network
+    else:
+        return False
+	#return network
 
 # ----------------------------------------------------------------------------- 
 # add_new_user(network, user, games): 
@@ -228,6 +217,11 @@ def add_connection(network, user_A, user_B):
 #   - If the user already exists in network, return network *UNCHANGED* (do not change
 #     the user's game preferences)
 def add_new_user(network, user, games):
+    if user in network:
+        return '*UNCHANGED*'
+    else:
+        network[user] = {}
+        network[user]['Games'] = games
     return network
 		
 # ----------------------------------------------------------------------------- 
@@ -249,7 +243,17 @@ def add_new_user(network, user, games):
 #   himself/herself. It is also OK if the list contains a user's primary 
 #   connection that is a secondary connection as well.
 def get_secondary_connections(network, user):
-	return []
+    second_connects = []
+    if user in network:
+        if 'Connections' in network[user]:
+            for element in network[user]['Connections']:
+                for item in network[element]['Connections']:
+                    if item not in second_connects:
+                        second_connects.append(item) 
+        return second_connects
+    else:
+        return None
+
 
 # ----------------------------------------------------------------------------- 	
 # count_common_connections(network, user_A, user_B): 
@@ -264,7 +268,20 @@ def get_secondary_connections(network, user):
 #   The number of connections in common (as an integer).
 #   - If user_A or user_B is not in network, return False.
 def count_common_connections(network, user_A, user_B):
-    return 0
+    if user_A in network and user_B in network:
+        count = 0
+        if 'Connections' not in network[user_A]:
+            return count
+        if 'Connections' not in network[user_B]:
+            return count
+        for element in network[user_A]['Connections']:
+            if element in network[user_B]['Connections']:
+                print 'Its a match', element, 'matches', network[user_B]['Connections']
+                count = count + 1
+        return count
+    else:
+        return False    
+    
 
 # ----------------------------------------------------------------------------- 
 # find_path_to_friend(network, user_A, user_B): 
@@ -298,9 +315,34 @@ def count_common_connections(network, user_A, user_B):
 #   in this procedure to keep track of nodes already visited in your search. You 
 #   may safely add default parameters since all calls used in the grading script 
 #   will only include the arguments network, user_A, and user_B.
+def find_path(current, network, user_A, user_B):
+    if user_A == user_B:
+        return True, [user_B]
+    res = []
+    for connection in network[user_A]['Connections']:
+        if connection not in current:
+            current[connection] = False
+        if not current[connection]:
+            current[connection] = True
+            rec = find_path(current, network, connection, user_B)
+            if rec[0]:
+                return True, [user_A] + rec[1]
+            current[connection] = False
+    return False, None
+
+
 def find_path_to_friend(network, user_A, user_B):
-	# your RECURSIVE solution here!
-	return None
+    if user_A not in network or user_B not in network:
+        return None
+    if 'Connections' not in network[user_A] or 'Connections' not in network[user_B]:
+        return None
+    current = {user_A: True}
+    res = find_path(current, network, user_A, user_B)
+    if res[0]:
+        #for each in res[1]:
+            #print 'something'#network[each]['Connections']
+        return res[1]
+    return None
 
 # Make-Your-Own-Procedure (MYOP)
 # ----------------------------------------------------------------------------- 
@@ -311,15 +353,175 @@ def find_path_to_friend(network, user_A, user_B):
 
 # Replace this with your own procedure! You can also uncomment the lines below
 # to see how your code behaves. Have fun!
+# COMMENT TIM
+# Procedure to add, who has the most connections
+# Who plays a particular game
+# etc. Data analysis stuff.
 
+# This was a simple procedure to print user data for people in the network.
+# You can print the entire network by passing in '[]' for user
+# If user not in network it will return "Is Not in Network"
+def print_net(net,users):
+    print '----------------------------------'
+    if len(users) == 0:
+        for element in net:
+            users.append(element)
+    for element in users:
+        print 'name:', element
+        if element in net:
+            for item in net[element]:
+                print item, ':', net[element][item]
+            print '-------------'
+        else:
+            print 'Is Not In Network'
+            print '-------------'  
+                      
+# This was a simple procedure to print headers.    It does nothing with the date  
+def print_header(header,action):
+    if action == 'header':
+        print ' '
+        print '*************************************************************'
+        print header
+        print '*************************************************************' 
+    if action == 'line':
+        print ' '
+        line_out = '- ' + header + ' -'
+        count = len(line_out)
+        while count < 61:
+            line_out = line_out + '-'
+            count = len(line_out)
+        print line_out
+ 
+# This procedure determines the games played, the ranking of the games played,
+# and the users who play them. 
+# It prints the ordered list of games and who plays along with the highest 
+# ranked game at the bottom.
+# There are many more things I could think to analyze and write code for,
+# but wanted to get this turned in and keep working on next classes.     
+def game_count(network):
+    games = {}
+    best_game = ''
+    for element in network:
+        game_list = []
+        if 'Games' in network[element]:
+            game_list = network[element]['Games']
+            for game in game_list:
+                if game in games:
+                    games[game]['count'] = games[game]['count'] + 1
+                    games[game]['players'].append(element)
+                else:
+                    games[game] = {}
+                    games[game]['count'] = 1
+                    games[game]['players'] = [element]
+    highest_rank = 0
+    for element in games:
+        if games[element]['count'] > highest_rank:
+            highest_rank = games[element]['count']
+            best_game = element 
+    n = 0
+    if len(games) == 0:
+        print '* No Games In Network *'
+        return None
+    while n <= highest_rank:
+        for element in games:
+            if games[element]['count'] == n:
+                print '-----------------------------------------'
+                print games[element]['count'], 'players chose: "', element, '"'
+                print 'played by:', games[element]['players']
+        n = n + 1
+    print '-----------------------------------------'
+    print 'And the Highest Ranked Game Is ----------'
+    print best_game, '--- with:', games[best_game]['count'], 'players'
+    
+        
+    return games, best_game
+
+
+            
+            
+        
+
+# ------------------------------------------
+print_header('BUILD THE NETWORK','header')
 net = create_data_structure(example_input)
-print net
-#print get_connections(net, "Debra")
-#print get_connections(net, "Mercedes")
-#print get_games_liked(net, "John")
-#print add_connection(net, "John", "Freda")
-#print add_new_user(net, "Debra", []) 
-#print add_new_user(net, "Nick", ["Seven Schemers", "The Movie: The Game"]) # True
-#print get_secondary_connections(net, "Mercedes")
-#print count_common_connections(net, "Mercedes", "John")
-#print find_path_to_friend(net, "John", "Ollie")
+# ------------------------------------------
+print_net(net,[])
+# ------------------------------------------
+print_header('GET CONNECTIONS','header')
+print_header('Connections for Debra', 'line')
+print get_connections(net, "Debra")
+print_header('Connections for Mercedes', 'line')
+print get_connections(net, "Mercedes")
+print_header('Connections for oinker', 'line')
+print get_connections(net,"oinker")
+print_header('Connections for Kathy (who has no connections)', 'line')
+print get_connections(net,"Kathy")
+# ------------------------------------------
+print_header('GET GAMES','header')
+print_header('Games For John', 'line')
+print get_games_liked(net, "John")
+print_header('Games For Oinker', 'line')
+print get_games_liked(net, "oinker") 
+print_header('Games For Franklin who has no games', 'line')
+print get_games_liked(net, "Franklin") 
+# ------------------------------------------
+print_header('ADD CONNECTION','header')
+print_header('Add Connection from John to Freda', 'line')
+print_header('Johns current connections', 'line')
+print_net(net,['John'])
+print_header('Function to add Freda to John', 'line')
+print add_connection(net, "John", "Freda")
+print_net(net,['John'])
+print_header('Add Connection from John to Oink', 'line')
+print add_connection(net, "John", "Oink")
+# ------------------------------------------
+print_header('TESTING PRINT SUMMARY WITH Non-Existent','header')
+print_net(net,['Turdman', 'John', 'Freda', 'Oink'])
+# ------------------------------------------
+print_header('ADDING USERS','header')
+print_header('Add user Debra (who already exists)','line')
+print add_new_user(net, "Debra", []) 
+print_net(net,['Debra'])
+print_header('Add user Nick with Games','line')
+print add_new_user(net, "Nick", ["Seven Schemers", "The Movie: The Game"]) # True
+print_net(net,['Nick'])
+
+print_header('Add user Debra (who already exists)','line')
+# ------------------------------------------
+print_header('GET SECONDARY CONNECTIONS','header')
+print_header('Seconday_connections for Mercedes','line')
+print_net(net,['Mercedes'])
+print_net(net,['Walter', 'Robin', 'Bryant'])
+print get_secondary_connections(net, "Mercedes")
+print_header('Seconday_connections for Kathy who has not connections','line')
+print get_secondary_connections(net, "Kathy")
+# ------------------------------------------
+print_header('GET COMMON CONNECTIONS COUNT','header')
+print_header('Common Connections for John and Mercedes','line')
+print count_common_connections(net, "Mercedes", "John")
+print_net(net,['Mercedes', 'John'])
+print_header('Common Connections for Freda and Bryant','line')
+print count_common_connections(net, "Freda", "Bryant")
+print_net(net,['Freda', 'Bryant'])
+print_header('Common Connections for Bryant and oink','line')
+print count_common_connections(net, "Bryant", "Oink")
+print_net(net,['Freda', 'Bryant'])
+print_header('Common Connections for Bryant and oink','line')
+print count_common_connections(net, "Bryant", "Oink")
+print_net(net,['Freda', 'Bryant'])
+print_header('Common Connections for Bryant and Kathy(who has no connections)','line')
+print count_common_connections(net, "Bryant", "Kathy")
+print_net(net,['Bryant', 'Kathy'])
+# ------------------------------------------
+print_header('FIND PATH TO BETWEEN CONTACTS','header')
+print_header('Path Between John and Ollie','line')
+print find_path_to_friend(net, "John", "Ollie")
+print_header('Path Between John and Kathy(who has no connections)','line')
+print find_path_to_friend(net, "John", "Kathy")
+print_header('Path Between Ollie and Jennie','line')
+print find_path_to_friend(net, "Ollie", "Jennie")
+print_header('Path Between John and Bryant','line')
+print find_path_to_friend(net, "John", "Bryant")
+# ------------------------------------------
+print_header('MYOP - Game Count','header')
+game_count(net)
