@@ -1,5 +1,5 @@
 #Final Project Description
-#Congratulations on making it to the final project! Your job is to take simple text strings #like "Alex likes Carla, Ryan, and Priya" and turn them into a social network. To do this, #you must complete a number of required procedures, as described on the next screen. You must #also create a "make-your-own" procedure.
+#Congratulations on making it to the final project! Your job is to take simple text strings #like "Alex likes Carla, Ryan, and Priya" and turn them into a social network_tim. To do this, #you must complete a number of required procedures, as described on the next screen. You must #also create a "make-your-own" procedure.
 
 #Most of this project will take place inside the browser and most of it will be auto-graded. #Feel free to share your final code with your peers in the Discussion Forum for additional #feedback.
 
@@ -14,10 +14,10 @@
 # Background
 # ==========
 # You and your friend have decided to start a company that hosts a gaming
-# social network site. Your friend will handle the website creation (they know 
+# social network_tim site. Your friend will handle the website creation (they know 
 # what they are doing, having taken our web development class). However, it is 
-# up to you to create a data structure that manages the game-network information 
-# and to define several procedures that operate on the network. 
+# up to you to create a data structure that manages the game-network_tim information 
+# and to define several procedures that operate on the network_tim. 
 #
 # In a website, the data is stored in a database. In our case, however, all the 
 # information comes in a big string of text. Each pair of sentences in the text 
@@ -41,7 +41,7 @@
 # will allow you to manage the data above and implement the procedures below. 
 # 
 # You may assume that <user> is a unique identifier for a user. For example, there
-# can be at most one 'John' in the network. Furthermore, connections are not 
+# can be at most one 'John' in the network_tim. Furthermore, connections are not 
 # symmetric - if 'Bob' is connected to 'Alice', it does not mean that 'Alice' is
 # connected to 'Bob'.
 #
@@ -76,9 +76,7 @@ Jennie likes to play Super Mushroom Man, Dinosaur Diner, Call of Arms.\
 Robin is connected to Ollie.\
 Robin likes to play Call of Arms, Dwarves and Swords.\
 Freda is connected to Olive, John, Debra.\
-Freda likes to play Starfleet Commander, Ninja Hamsters, Seahorse Adventures.\
-Franklin is connected to Robin, Jennie.\
-Kathy likes to play Oink, Yabbo, Tiddly Winks."
+Freda likes to play Starfleet Commander, Ninja Hamsters, Seahorse Adventures."
 
 # ----------------------------------------------------------------------------- 
 # create_data_structure(string_input): 
@@ -87,7 +85,7 @@ Kathy likes to play Oink, Yabbo, Tiddly Winks."
 #   data structure you would like to use to manage the information.
 # 
 # Arguments: 
-#   string_input: block of text containing the network information
+#   string_input: block of text containing the network_tim information
 #
 #   You may assume that for all the test cases we will use, you will be given the 
 #   connections and games liked for all users listed on the right-hand side of an
@@ -97,10 +95,10 @@ Kathy likes to play Oink, Yabbo, Tiddly Winks."
 #   list B's connections or liked games.
 #   
 #   The procedure should be able to handle an empty string (the string '') as input, in
-#   which case it should return a network with no users.
+#   which case it should return a network_tim with no users.
 # 
 # Return:
-#   The newly created network data structure
+#   The newly created network_tim data structure
 def create_data_structure(string_input):
     master_list = {}
     current = 0
@@ -109,7 +107,6 @@ def create_data_structure(string_input):
         if string_input.find('.',current) == -1:
             return master_list
         line = string_input[current:string_input.find('.', current)] # Get Next Line
-        #print line
         name = line[0:line.find(' ',0)] # Get Name in Line
         if name not in master_list:
             master_list[name] = {}  # If name not in master yet
@@ -117,137 +114,132 @@ def create_data_structure(string_input):
             master_list[name]['Connections'] = line[line.find('connected')+13:len(line)].split(', ')
         if line.find('play') > 0:
             master_list[name]['Games'] = line[line.find('play')+5:len(line)].split(', ')
-        # More work *******
-        # Will need to make sure this works for empty list or no entry of particular type say games played is blank
-        # Also make sure it can handle an empty string.    READ THE REQUIREMENTS AND MAKE SURE ALL BUILT IN AND CHECKED
         current = string_input.find('.', current) + 1
-        #print 'current is:', current
-        #return master_list
-        
-
 
 # ----------------------------------------------------------------------------- # 
-# Note that the first argument to all procedures below is 'network' This is the #
+# Note that the first argument to all procedures below is 'network_tim' This is the #
 # data structure that you created with your create_data_structure procedure,    #
 # though it may be modified as you add new users or new connections. Each       #
-# procedure below will then modify or extract information from 'network'        # 
+# procedure below will then modify or extract information from 'network_tim'        # 
 # ----------------------------------------------------------------------------- #
 
 # ----------------------------------------------------------------------------- 
-# get_connections(network, user): 
+# get_connections(network_tim, user): 
 #   Returns a list of all the connections that user has
 #
 # Arguments: 
-#   network: the gamer network data structure
+#   network_tim: the gamer network_tim data structure
 #   user:    a string containing the name of the user
 # 
 # Return: 
 #   A list of all connections the user has.
 #   - If the user has no connections, return an empty list.
-#   - If the user is not in network, return None.
-def get_connections(network, user):
-    if user in network:
-        if 'Connections' in network[user]:
-	        return network[user]['Connections']
+#   - If the user is not in network_tim, return None.
+
+def get_connections(network_tim, user):
+    if user in network_tim:
+        if 'Connections' in network_tim[user]:
+	        return network_tim[user]['Connections']
         else:
             return []
     else:
         return None
 
 # ----------------------------------------------------------------------------- 
-# get_games_liked(network, user): 
+# get_games_liked(network_tim, user): 
 #   Returns a list of all the games a user likes
 #
 # Arguments: 
-#   network: the gamer network data structure
+#   network_tim: the gamer network_tim data structure
 #   user:    a string containing the name of the user
 # 
 # Return: 
 #   A list of all games the user likes.
 #   - If the user likes no games, return an empty list.
-#   - If the user is not in network, return None.
-def get_games_liked(network,user):
-    if user in network:
-        if 'Games' in network[user]:
-	        return network[user]['Games']
+#   - If the user is not in network_tim, return None.
+def get_games_liked(network_tim,user):
+    if user in network_tim:
+        if 'Games' in network_tim[user]:
+	        return network_tim[user]['Games']
         else:
             return []
     else:
         return None
 
 # ----------------------------------------------------------------------------- 
-# add_connection(network, user_A, user_B): 
+# add_connection(network_tim, user_A, user_B): 
 #   Adds a connection from user_A to user_B. Make sure to check that both users 
-#   exist in network.
+#   exist in network_tim.
 # 
 # Arguments: 
-#   network: the gamer network data structure 
+#   network_tim: the gamer network_tim data structure 
 #   user_A:  a string with the name of the user the connection is from
 #   user_B:  a string with the name of the user the connection is to
 #
 # Return: 
-#   The updated network with the new connection added.
-#   - If a connection already exists from user_A to user_B, return network unchanged.
-#   - If user_A or user_B is not in network, return False.
-def add_connection(network, user_A, user_B):
-    if user_A in network and user_B in network:
-        if user_B in network[user_A]['Connections']:
-            return network
-        network[user_A]['Connections'].append(user_B)
-        return network
+#   The updated network_tim with the new connection added.
+#   - If a connection already exists from user_A to user_B, return network_tim unchanged.
+#   - If user_A or user_B is not in network_tim, return False.
+def add_connection(network_tim, user_A, user_B):
+    if user_A in network_tim and user_B in network_tim:
+        if user_B in network_tim[user_A]['Connections']:
+            return network_tim
+        network_tim[user_A]['Connections'].append(user_B)
+        return network_tim
     else:
         return False
-	#return network
+	#return network_tim
 
 # ----------------------------------------------------------------------------- 
-# add_new_user(network, user, games): 
-#   Creates a new user profile and adds that user to the network, along with
+# add_new_user(network_tim, user, games): 
+#   Creates a new user profile and adds that user to the network_tim, along with
 #   any game preferences specified in games. Assume that the user has no 
 #   connections to begin with.
 # 
 # Arguments:
-#   network: the gamer network data structure
-#   user:    a string containing the name of the user to be added to the network
+#   network_tim: the gamer network_tim data structure
+#   user:    a string containing the name of the user to be added to the network_tim
 #   games:   a list of strings containing the user's favorite games, e.g.:
 #		     ['Ninja Hamsters', 'Super Mushroom Man', 'Dinosaur Diner']
 #
 # Return: 
-#   The updated network with the new user and game preferences added. The new user 
+#   The updated network_tim with the new user and game preferences added. The new user 
 #   should have no connections.
-#   - If the user already exists in network, return network *UNCHANGED* (do not change
+#   - If the user already exists in network_tim, return network_tim *UNCHANGED* (do not change
 #     the user's game preferences)
-def add_new_user(network, user, games):
-    if user in network:
+def add_new_user(network_tim, user, games):
+    if user in network_tim:
         return '*UNCHANGED*'
     else:
-        network[user] = {}
-        network[user]['Games'] = games
-    return network
+        network_tim[user] = {}
+        network_tim[user]['Games'] = games
+        network_tim[user]['Connections'] = []
+    return network_tim
 		
 # ----------------------------------------------------------------------------- 
-# get_secondary_connections(network, user): 
+# get_secondary_connections(network_tim, user): 
 #   Finds all the secondary connections (i.e. connections of connections) of a 
 #   given user.
 # 
 # Arguments: 
-#   network: the gamer network data structure
+#   network_tim: the gamer network_tim data structure
 #   user:    a string containing the name of the user
 #
 # Return: 
 #   A list containing the secondary connections (connections of connections).
-#   - If the user is not in the network, return None.
+#   - If the user is not in the network_tim, return None.
 #   - If a user has no primary connections to begin with, return an empty list.
 # 
 # NOTE: 
 #   It is OK if a user's list of secondary connections includes the user 
 #   himself/herself. It is also OK if the list contains a user's primary 
 #   connection that is a secondary connection as well.
-def get_secondary_connections(network, user):
+def get_secondary_connections(network_tim, user):
     second_connects = []
-    if user in network:
-        if 'Connections' in network[user]:
-            for element in network[user]['Connections']:
-                for item in network[element]['Connections']:
+    if user in network_tim:
+        if 'Connections' in network_tim[user]:
+            for element in network_tim[user]['Connections']:
+                for item in network_tim[element]['Connections']:
                     if item not in second_connects:
                         second_connects.append(item) 
         return second_connects
@@ -256,27 +248,26 @@ def get_secondary_connections(network, user):
 
 
 # ----------------------------------------------------------------------------- 	
-# count_common_connections(network, user_A, user_B): 
+# count_common_connections(network_tim, user_A, user_B): 
 #   Finds the number of people that user_A and user_B have in common.
 #  
 # Arguments: 
-#   network: the gamer network data structure
+#   network_tim: the gamer network_tim data structure
 #   user_A:  a string containing the name of user_A
 #   user_B:  a string containing the name of user_B
 #
 # Return: 
 #   The number of connections in common (as an integer).
-#   - If user_A or user_B is not in network, return False.
-def count_common_connections(network, user_A, user_B):
-    if user_A in network and user_B in network:
+#   - If user_A or user_B is not in network_tim, return False.
+def count_common_connections(network_tim, user_A, user_B):
+    if user_A in network_tim and user_B in network_tim:
         count = 0
-        if 'Connections' not in network[user_A]:
+        if 'Connections' not in network_tim[user_A]:
             return count
-        if 'Connections' not in network[user_B]:
+        if 'Connections' not in network_tim[user_B]:
             return count
-        for element in network[user_A]['Connections']:
-            if element in network[user_B]['Connections']:
-                print 'Its a match', element, 'matches', network[user_B]['Connections']
+        for element in network_tim[user_A]['Connections']:
+            if element in network_tim[user_B]['Connections']:
                 count = count + 1
         return count
     else:
@@ -284,22 +275,22 @@ def count_common_connections(network, user_A, user_B):
     
 
 # ----------------------------------------------------------------------------- 
-# find_path_to_friend(network, user_A, user_B): 
+# find_path_to_friend(network_tim, user_A, user_B): 
 #   Finds a connections path from user_A to user_B. It has to be an existing 
 #   path but it DOES NOT have to be the shortest path.
 #   
 # Arguments:
-#   network: The network you created with create_data_structure. 
+#   network_tim: The network_tim you created with create_data_structure. 
 #   user_A:  String holding the starting username ("Abe")
 #   user_B:  String holding the ending username ("Zed")
 # 
 # Return:
 #   A list showing the path from user_A to user_B.
 #   - If such a path does not exist, return None.
-#   - If user_A or user_B is not in network, return None.
+#   - If user_A or user_B is not in network_tim, return None.
 #
 # Sample output:
-#   >>> print find_path_to_friend(network, "Abe", "Zed")
+#   >>> print find_path_to_friend(network_tim, "Abe", "Zed")
 #   >>> ['Abe', 'Gel', 'Sam', 'Zed']
 #   This implies that Abe is connected with Gel, who is connected with Sam, 
 #   who is connected with Zed.
@@ -314,41 +305,40 @@ def count_common_connections(network, user_A, user_B):
 # - If you are comfortable with default parameters, you might consider using one 
 #   in this procedure to keep track of nodes already visited in your search. You 
 #   may safely add default parameters since all calls used in the grading script 
-#   will only include the arguments network, user_A, and user_B.
-def find_path(current, network, user_A, user_B):
+#   will only include the arguments network_tim, user_A, and user_B.
+
+def find_path(current, network_tim, user_A, user_B):
     if user_A == user_B:
         return True, [user_B]
     res = []
-    for connection in network[user_A]['Connections']:
+    for connection in network_tim[user_A]['Connections']:
         if connection not in current:
             current[connection] = False
         if not current[connection]:
             current[connection] = True
-            rec = find_path(current, network, connection, user_B)
+            rec = find_path(current, network_tim, connection, user_B)
             if rec[0]:
                 return True, [user_A] + rec[1]
             current[connection] = False
     return False, None
 
 
-def find_path_to_friend(network, user_A, user_B):
-    if user_A not in network or user_B not in network:
-        return None
-    if 'Connections' not in network[user_A] or 'Connections' not in network[user_B]:
+def find_path_to_friend(network_tim, user_A, user_B):
+    if user_A not in network_tim:
         return None
     current = {user_A: True}
-    res = find_path(current, network, user_A, user_B)
+    res = find_path(current, network_tim, user_A, user_B)
     if res[0]:
-        #for each in res[1]:
-            #print 'something'#network[each]['Connections']
         return res[1]
     return None
+    
+        
 
 # Make-Your-Own-Procedure (MYOP)
 # ----------------------------------------------------------------------------- 
-# Your MYOP should either perform some manipulation of your network data 
+# Your MYOP should either perform some manipulation of your network_tim data 
 # structure (like add_new_user) or it should perform some valuable analysis of 
-# your network (like path_to_friend). Don't forget to comment your MYOP. You 
+# your network_tim (like path_to_friend). Don't forget to comment your MYOP. You 
 # may give this procedure any name you want.
 
 # Replace this with your own procedure! You can also uncomment the lines below
@@ -358,9 +348,9 @@ def find_path_to_friend(network, user_A, user_B):
 # Who plays a particular game
 # etc. Data analysis stuff.
 
-# This was a simple procedure to print user data for people in the network.
-# You can print the entire network by passing in '[]' for user
-# If user not in network it will return "Is Not in Network"
+# This was a simple procedure to print user data for people in the network_tim.
+# You can print the entire network_tim by passing in '[]' for user
+# If user not in network_tim it will return "Is Not in Network"
 def print_net(net,users):
     print '----------------------------------'
     if len(users) == 0:
@@ -398,13 +388,13 @@ def print_header(header,action):
 # ranked game at the bottom.
 # There are many more things I could think to analyze and write code for,
 # but wanted to get this turned in and keep working on next classes.     
-def game_count(network):
+def game_count(network_tim):
     games = {}
     best_game = ''
-    for element in network:
+    for element in network_tim:
         game_list = []
-        if 'Games' in network[element]:
-            game_list = network[element]['Games']
+        if 'Games' in network_tim[element]:
+            game_list = network_tim[element]['Games']
             for game in game_list:
                 if game in games:
                     games[game]['count'] = games[game]['count'] + 1
@@ -431,12 +421,8 @@ def game_count(network):
         n = n + 1
     print '-----------------------------------------'
     print 'And the Highest Ranked Game Is ----------'
-    print best_game, '--- with:', games[best_game]['count'], 'players'
-    
-        
+    print best_game, '--- with:', games[best_game]['count'], 'players'   
     return games, best_game
-
-
             
             
         
@@ -460,23 +446,23 @@ print get_connections(net,"Kathy")
 print_header('GET GAMES','header')
 print_header('Games For John', 'line')
 print get_games_liked(net, "John")
-print_header('Games For Oinker', 'line')
+print_header('Games For Oinker (who is not in the network_tim)', 'line')
 print get_games_liked(net, "oinker") 
 print_header('Games For Franklin who has no games', 'line')
 print get_games_liked(net, "Franklin") 
 # ------------------------------------------
 print_header('ADD CONNECTION','header')
 print_header('Add Connection from John to Freda', 'line')
-print_header('Johns current connections', 'line')
 print_net(net,['John'])
 print_header('Function to add Freda to John', 'line')
 print add_connection(net, "John", "Freda")
 print_net(net,['John'])
 print_header('Add Connection from John to Oink', 'line')
 print add_connection(net, "John", "Oink")
-# ------------------------------------------
-print_header('TESTING PRINT SUMMARY WITH Non-Existent','header')
-print_net(net,['Turdman', 'John', 'Freda', 'Oink'])
+print_net(net,['John'])
+print_header('Add Connection from John to Bryant (Who John is already connection)', 'line')
+print add_connection(net, "John", "Bryant")
+print_net(net,['John'])
 # ------------------------------------------
 print_header('ADDING USERS','header')
 print_header('Add user Debra (who already exists)','line')
@@ -485,15 +471,15 @@ print_net(net,['Debra'])
 print_header('Add user Nick with Games','line')
 print add_new_user(net, "Nick", ["Seven Schemers", "The Movie: The Game"]) # True
 print_net(net,['Nick'])
-
-print_header('Add user Debra (who already exists)','line')
 # ------------------------------------------
 print_header('GET SECONDARY CONNECTIONS','header')
 print_header('Seconday_connections for Mercedes','line')
 print_net(net,['Mercedes'])
 print_net(net,['Walter', 'Robin', 'Bryant'])
 print get_secondary_connections(net, "Mercedes")
-print_header('Seconday_connections for Kathy who has not connections','line')
+print_header('Seconday_connections for Kathy who has no connections','line')
+print get_secondary_connections(net, "Kathy")
+print_header('Seconday_connections for Kathy who has no connections','line')
 print get_secondary_connections(net, "Kathy")
 # ------------------------------------------
 print_header('GET COMMON CONNECTIONS COUNT','header')
@@ -505,23 +491,24 @@ print count_common_connections(net, "Freda", "Bryant")
 print_net(net,['Freda', 'Bryant'])
 print_header('Common Connections for Bryant and oink','line')
 print count_common_connections(net, "Bryant", "Oink")
-print_net(net,['Freda', 'Bryant'])
-print_header('Common Connections for Bryant and oink','line')
-print count_common_connections(net, "Bryant", "Oink")
-print_net(net,['Freda', 'Bryant'])
+print_net(net,['Freda', 'Oink'])
 print_header('Common Connections for Bryant and Kathy(who has no connections)','line')
 print count_common_connections(net, "Bryant", "Kathy")
 print_net(net,['Bryant', 'Kathy'])
 # ------------------------------------------
-print_header('FIND PATH TO BETWEEN CONTACTS','header')
-print_header('Path Between John and Ollie','line')
-print find_path_to_friend(net, "John", "Ollie")
-print_header('Path Between John and Kathy(who has no connections)','line')
-print find_path_to_friend(net, "John", "Kathy")
+#print_header('FIND PATH TO BETWEEN CONTACTS','header')
+#print_header('Path Between John and Ollie','line')
+#print find_path_to_friend(net, "John", "Ollie")
+#print_header('Path Between John and Kathy(who has no connections)','line')
+#print find_path_to_friend(net, "John", "Kathy")
 print_header('Path Between Ollie and Jennie','line')
-print find_path_to_friend(net, "Ollie", "Jennie")
-print_header('Path Between John and Bryant','line')
-print find_path_to_friend(net, "John", "Bryant")
+print find_path_to_friend(net, "Ollie", "John")
+#print_header('Path Between John and Bryant','line')
+#print find_path_to_friend(net, "John", "Bryant")
+
 # ------------------------------------------
 print_header('MYOP - Game Count','header')
-game_count(net)
+#game_count(net)
+print add_new_user(net, 'Alice', [])
+print_net(net,['Alice'])
+print get_connections(net,'Alice')
